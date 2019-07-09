@@ -28,7 +28,19 @@ public:
       - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
       - ./frontend/dist:/usr/share/nginx/html
 
+mongobrowser:
+  image: mongo-express
+  links:
+    - mongodb:mongo
+  ports:
+    - "8081:8081"
+  environment:
+    - ME_CONFIG_OPTIONS_EDITORTHEME="ambiance" 
+    # - ME_CONFIG_BASICAUTH_USERNAME="admin" 
+    # - ME_CONFIG_BASICAUTH_PASSWORD="pass"
+
 mongodb:
   image: mongo
   ports:
       - "27017:27017"
+
