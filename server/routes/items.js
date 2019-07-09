@@ -5,8 +5,7 @@ var router = express.Router();
 var mongoose = require('mongoose');
 var Item = require('../models/Item.model');
 
-mongoose.connect('mongodb://mongodb:27017');
-
+mongoose.connect('mongodb://mongodb:27017/albang');
 // Get all items
 router.get('/items', function(req, res, next) {
   Item.find()

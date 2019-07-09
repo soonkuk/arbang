@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 var Item = require('../models/Item.model');
 
-mongoose.connect('mongodb://mongodb:27017');
+mongoose.connect('mongodb://mongodb:27017/albang');
 Item.collection.drop();
 var items = [
   new Item({

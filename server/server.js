@@ -7,7 +7,11 @@ const PORT = process.env.PORT || 3000;
 var winston = require('winston');
 var logger = require('morgan');
 var items = require('./routes/items');
+var users = require('./routes/users');
+var games = require('./routes/games');
 
+var mongoose = require('mongoose');
+mongoose.connect('mongodb://mongodb:27017/albang');
 
 // Body Parser
 app.use(logger('dev'));
@@ -15,6 +19,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
 app.use('/api', items);
+app.use('/api/g', games);
+app.use('/api/u', users);
 
 
 app.listen(3000, function() {
