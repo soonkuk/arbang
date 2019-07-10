@@ -25,9 +25,12 @@ frontend:
 public:
   image: nginx
   ports:
-      - "80:8080"
+      - "80:80"
+      - "443:443"
   volumes:
       - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - ./nginx/certs/bosgame.app.chained.crt:/etc/nginx/certs/bosgame.app.chained.crt
+      - ./nginx/certs/bosgame.app.key:/etc/nginx/certs/bosgame.app.key
       - ./frontend/dist:/usr/share/nginx/html
 
 mongobrowser:
