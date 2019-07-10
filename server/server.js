@@ -7,7 +7,6 @@ var bodyParser = require('body-parser');
 const PORT = process.env.PORT || 3000;
 var winston = require('winston');
 var logger = require('morgan');
-var items = require('./routes/items');
 var users = require('./routes/users');
 var games = require('./routes/games');
 
@@ -21,8 +20,7 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
-app.use('/api', items);
-app.use('/api/g', games);
+app.use('/api/', games);
 app.use('/api/u', users);
 
 
