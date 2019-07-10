@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-var GameSchema = new Schema({
+var BankSchema = new Schema({
     title: {type: String, required: true},
     genre: {type: String, required: true},
     desc: {type:String, required: true},
@@ -11,4 +11,4 @@ var GameSchema = new Schema({
     popularity: {type: Number, default: 0}
 });
 
-module.exports = mongoose.model('Game', GameSchema);
+module.exports = mongoose.model('Bank', GameSchema);

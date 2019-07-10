@@ -1,8 +1,11 @@
 var mongoose = require('mongoose');
 var User = require('../models/User.model');
 
-mongoose.connect('mongodb://mongodb:27017/albang');
+require('dotenv').config()
+mongoose.connect(process.env.MONGO_CONNECTION_STR);
+
 User.collection.drop();
+
 /*
 user[0] 
     Secret Seed: SCXSRKNDS7FG3L25OJHZ3MNAGKEOQ62JYYBXONMNL6CSUJVGBS7DTOBT

@@ -1,5 +1,6 @@
 'use strict';
 
+
 var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
@@ -11,7 +12,9 @@ var users = require('./routes/users');
 var games = require('./routes/games');
 
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://mongodb:27017/albang');
+
+require('dotenv').config();
+mongoose.connect(process.env.MONGO_CONNECTION_STR);
 
 // Body Parser
 app.use(logger('dev'));

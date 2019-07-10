@@ -1,6 +1,7 @@
 server:
   image: node
   command: npm run backend
+  restart: always
   working_dir: /app
   volumes:
     - ./server:/app
@@ -14,6 +15,7 @@ server:
 frontend:
   image: node
   command: npm run webpack
+  restart: always
   working_dir: /app
   volumes:
     - ./frontend:/app

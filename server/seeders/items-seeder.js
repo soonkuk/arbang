@@ -1,7 +1,9 @@
 var mongoose = require('mongoose');
 var Item = require('../models/Item.model');
 
-mongoose.connect('mongodb://mongodb:27017/albang');
+require('dotenv').config()
+mongoose.connect(process.env.MONGO_CONNECTION_STR);
+
 Item.collection.drop();
 var items = [
   new Item({
