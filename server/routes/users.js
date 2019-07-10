@@ -5,7 +5,8 @@ var router = express.Router();
 var mongoose = require('mongoose');
 var User = require('../models/User.model');
 
-mongoose.connect('mongodb://mongodb:27017/albang');
+require('dotenv').config();
+mongoose.connect(process.env.MONGO_CONNECTION_STR)
 /*
 var UserSchema = new Schema({
     uid: {type: String, required: true, unique: true},

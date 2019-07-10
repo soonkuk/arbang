@@ -5,7 +5,8 @@ var router = express.Router();
 var mongoose = require('mongoose');
 var Game = require('../models/Game.model');
 
-mongoose.connect('mongodb://mongodb:27017/albang');
+require('dotenv').config();
+mongoose.connect(process.env.MONGO_CONNECTION_STR);
 /*
 var GameSchema = new Schema({
     title: {type: String, required: true},
