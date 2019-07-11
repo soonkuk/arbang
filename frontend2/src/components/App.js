@@ -92,9 +92,6 @@ const SimpleDistribution = () => (
 const Body = () => (
   <Box flex={true} pad='medium' overflow='auto'>
     <Box flex={false}>
-      <Heading level={3} margin='none'>
-        <strong>BOS Game Main Page</strong>
-      </Heading>
       <Box pad={{ top: 'medium' }} gap='small'>
         <SimpleDistribution/>
         <SimpleBox/>
