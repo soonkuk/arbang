@@ -19,8 +19,8 @@ frontend:
   working_dir: /app
   volumes:
     - ./frontend2:/app
-  ports:
-    - "4000:4000"
+  # ports:
+  #   - "4000:4000"
 
 public:
   image: nginx
