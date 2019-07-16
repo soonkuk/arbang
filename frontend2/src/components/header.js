@@ -16,9 +16,10 @@ const Header = () => (
     <Menu
       dropAlign={{ top: 'top', right: 'right' }}
       items={[
-        { label: 'LogIn', href: '/login' },
+        { label: 'Home', href: '/' },
+        { label: 'Log In', href: '/login' },
         { label: 'Ranking', href: '/ranking' },
-        { label: 'Cash In/Out', href: '/cash_out' },
+        { label: 'BOS In/Out', href: '/bos-in' },
       ]}
       icon={<Icons.Menu color="white" />}
     />

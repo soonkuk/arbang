@@ -1,9 +1,15 @@
 import React from 'react';
-import {Box, Text} from 'grommet';
+import { Heading, Box, Text } from 'grommet';
 
-const Game = () => (
+// eslint-disable-next-line react/prop-types
+const Game = ({ match }) => (
   <Box>
-    <Text>Game Detail</Text>
+    <Heading>
+      Game Page
+    </Heading>
+    <Text>
+      { match.params.gameId }
+    </Text>
   </Box>
 );
 

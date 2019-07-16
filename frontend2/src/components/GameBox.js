@@ -22,7 +22,7 @@ const GameBox = props => (
   >
     <Box>
       <Image src={props.item.imageUri} />
-      <Anchor align="center">{props.item.title}</Anchor>
+      <Anchor align="center" href={`/game/${props.item.gameId}`}>{props.item.title}</Anchor>
       <Genre genre={props.item.genre} />
       <Popularity popularity={props.item.popularity} />
     </Box>
