@@ -1,14 +1,12 @@
-import React, { Component } from "react";
-import { Box, Heading, Button, Text } from "grommet";
+import React, { Component } from 'react';
+import {
+  Box, Heading, Button, Text,
+} from 'grommet';
 
 class AccountSignUp extends Component {
-
   render() {
-
     return (
-      <Box
-      flex={true}
-      >
+      <Box flex>
         <Box
           align="center"
           background="dark-2"
@@ -17,15 +15,15 @@ class AccountSignUp extends Component {
           gap="medium"
           pad="xlarge"
         >
-          <Box 
-            flex={false} 
-            align = 'center' 
+          <Box
+            flex={false}
+            align="center"
             pad="medium"
             align="center"
-            background={{ color: "#FFFFFF", opacity: "strong" }}
+            background={{ color: '#FFFFFF', opacity: 'strong' }}
             round="xsmall"
-            gap="small" 
-            overflow='auto'
+            gap="small"
+            overflow="auto"
           >
             <div align="center" direction="row">
               <Text>SNS 간편가입</Text>

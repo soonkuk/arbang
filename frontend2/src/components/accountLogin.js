@@ -1,10 +1,11 @@
-import React, { Component } from "react";
-import { Box, Heading, TextInput, Button } from "grommet";
+import React, { Component } from 'react';
+import {
+  Box, Heading, TextInput, Button,
+} from 'grommet';
 
 class SimpleTextInput extends Component {
-
   state = {
-    name:""
+    name: '',
   }
 
   ref = React.createRef();
@@ -14,20 +15,17 @@ class SimpleTextInput extends Component {
   render() {
     const { value } = this.state;
     return (
-          <Box width="small" >
-            <TextInput ref={this.ref} value={value} onChange={this.onChange} />
-          </Box>
+      <Box width="small">
+        <TextInput ref={this.ref} value={value} onChange={this.onChange} />
+      </Box>
     );
   }
 }
 
 class AccountLogin extends Component {
-
   render() {
     return (
-      <Box
-      flex={true}
-      >
+      <Box flex>
         <Box
           align="center"
           background="dark-2"
@@ -36,41 +34,38 @@ class AccountLogin extends Component {
           gap="medium"
           pad="xlarge"
         >
-          <Box 
-            flex={false} 
-            align = 'center' 
+          <Box
+            flex={false}
+            align="center"
             pad="medium"
             align="center"
-            background={{ color: "#FFFFFF", opacity: "strong" }}
+            background={{ color: '#FFFFFF', opacity: 'strong' }}
             round="xsmall"
-            gap="small" 
-            overflow='auto'
+            gap="small"
+            overflow="auto"
           >
-            <Heading level={3} margin='none'>
+            <Heading level={3} margin="none">
               <strong>Log in</strong>
             </Heading>
-            <Box 
-              pad={{ top: 'medium' }} 
-              gap='small'
-            >
+            <Box pad={{ top: 'medium' }} gap="small">
               <div>
-                ID : <SimpleTextInput />
+                ID :
+                {' '}
+                <SimpleTextInput />
               </div>
               <div>
-                PASSWORD : <SimpleTextInput id='Password' />
+                PASSWORD :
+                {' '}
+                <SimpleTextInput id="Password" />
               </div>
-              <div  align='center'>
-                <Button 
-                  label='Login' 
-                  primary={true} 
-                  onClick={() => {}} 
-                />
+              <div align="center">
+                <Button label="Login" primary onClick={() => {}} />
               </div>
             </Box>
           </Box>
         </Box>
       </Box>
-    )
+    );
   }
 }
 

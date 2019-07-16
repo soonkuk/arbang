@@ -10,4 +10,5 @@ ReactDOM.render(<App />, document.getElementById('root'));
 // Learn more about service workers: https://bit.ly/CRA-PWA
 serviceWorker.unregister();
 
-console.log("Hello World from your main file!");
+// eslint-disable-next-line no-console
+console.log('Hello World from your main file!');

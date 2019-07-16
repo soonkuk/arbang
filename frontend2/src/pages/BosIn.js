@@ -1,10 +1,10 @@
 import React from 'react';
-import {Box, Text} from 'grommet';
+import { Box, Text } from 'grommet';
 
 const BosIn = () => (
-<Box>
+  <Box>
     <Text>Bos In</Text>
-</Box>
+  </Box>
 );
 
 export default BosIn;

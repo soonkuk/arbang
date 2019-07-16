@@ -1,19 +1,18 @@
-import React, { Component }  from 'react';
+import React, { Component } from 'react';
 import { Box, Text } from 'grommet';
-import AccountLogin from '../components/accountLogin';
-import AccountSignUp from '../components/accountSignUp';
-import AccountLogInSignUp from '../components/accountLogInSignUp';
+import AccountLogin from '../components/AccountLogin';
+import AccountSignUp from '../components/AccountSignUp';
+import AccountLogInSignUp from '../components/AccountLogInSignUp';
 
 class AccountMain extends Component {
-
   render() {
     return (
-      <Box flex={true}>
+      <Box flex>
         <AccountLogInSignUp />
         <AccountLogin />
         <AccountSignUp />
       </Box>
-    )
+    );
   }
 }
 

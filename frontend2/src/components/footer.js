@@ -1,19 +1,19 @@
 import React from 'react';
-import {Box, Button} from 'grommet';
+import { Box, Button } from 'grommet';
 
 const Footer = () => (
   <Box
-    tag='footer'
-    direction='row'
-    justify='end'
-    pad='medium'
+    tag="footer"
+    direction="row"
+    justify="end"
+    pad="medium"
     border={{ side: 'top' }}
-    gap='small'
+    gap="small"
     flex={false}
   >
-    <Button label='Cancel' color='border' onClick={() => {}} />
-    <Button label='Add' primary={true} onClick={() => {}} />
+    <Button label="Cancel" color="border" onClick={() => {}} />
+    <Button label="Add" primary onClick={() => {}} />
   </Box>
 );
 
-export default Footer; 
+export default Footer;

@@ -2,9 +2,9 @@ import React from 'react';
 import {Box, Text} from 'grommet';
 
 const Game = () => (
-<Box>
+  <Box>
     <Text>Game Detail</Text>
-</Box>
+  </Box>
 );
 
 export default Game;
