@@ -1,8 +1,11 @@
-import React, { Component, useState } from "react";
-import { Box, FormField, Heading, Grommet, TextInput, Button } from "grommet";
+import React, { Component } from "react";
+import { Box, Heading, TextInput, Button } from "grommet";
 
 class SimpleTextInput extends Component {
-  state = { value: "" };
+
+  state = {
+    name:""
+  }
 
   ref = React.createRef();
 
