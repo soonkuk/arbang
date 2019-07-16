@@ -1,16 +1,12 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { Link } from 'react-router-dom';
 import {
-  Box, Text, Image, Anchor,
+  Box, Image, Anchor,
 } from 'grommet';
-import * as Icons from 'grommet-icons';
 import Genre from './Genre';
 import Popularity from './Popularity';
-import Game from '../pages/game';
-// import Title from './Title';
 
 
-// class GameBox extends Component {
-//   render(){
 const GameBox = props => (
   <Box
     pad=""
@@ -22,7 +18,8 @@ const GameBox = props => (
   >
     <Box>
       <Image src={props.item.imageUri} />
-      <Anchor align="center" href={`/game/${props.item.gameId}`}>{props.item.title}</Anchor>
+      {/* <Anchor align="center" href={`/game/${props.item.gameId}`}>{props.item.title}</Anchor> */}
+      <Link to={`/game/${props.item.gameId}`}>{props.item.title}</Link>
       <Genre genre={props.item.genre} />
       <Popularity popularity={props.item.popularity} />
     </Box>
