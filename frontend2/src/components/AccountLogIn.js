@@ -1,26 +1,12 @@
-import React, { Component } from "react";
-import { Box, Heading, TextInput, Button } from "grommet";
+import React, { Component } from 'react';
+import {
+  Box,
+  Heading,
+  Button,
+} from 'grommet';
+import BosTextInput from './Components';
 
-class SimpleTextInput extends Component {
-
-  state = {
-    name:""
-  }
-
-  ref = React.createRef();
-
-  onChange = event => this.setState({ value: event.target.value });
-
-  render() {
-    const { value } = this.state;
-    return (
-          <Box width="small" >
-            <TextInput ref={this.ref} value={value} onChange={this.onChange} />
-          </Box>
-    );
-  }
-}
-
+/* eslint-disable */
 class AccountLogin extends Component {
 
   render() {
@@ -54,10 +40,10 @@ class AccountLogin extends Component {
               gap='small'
             >
               <div>
-                ID : <SimpleTextInput />
+                ID : <BosTextInput />
               </div>
               <div>
-                PASSWORD : <SimpleTextInput id='Password' />
+                PASSWORD : <BosTextInput id='Password' />
               </div>
               <div  align='center'>
                 <Button 
