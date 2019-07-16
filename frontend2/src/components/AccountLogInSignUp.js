@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
-import { Box, FormField, Heading, Grommet, TextInput, Button, Text} from "grommet";
+import {
+  Box,
+  Button,
+  Text,
+} from 'grommet';
 
+/* eslint-disable */
 class AccountLogInSignUp extends Component {
   render() {
     return (

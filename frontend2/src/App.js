@@ -1,8 +1,8 @@
 import React from 'react';
+<<<<<<< HEAD
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { Grommet, Box } from 'grommet';
 import { grommet as grommetTheme } from 'grommet/themes';
-
 import Header from './components/Header';
 // import Footer from './components/footer';
 import Landing from './pages/Landing';
