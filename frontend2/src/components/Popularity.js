@@ -1,10 +1,10 @@
 import React from 'react';
-import { Box, Text } from 'grommet';
+import { Box } from 'grommet';
 import * as Icons from 'grommet-icons';
 
 // eslint-disable-next-line react/prop-types
 const Popularity = ({ popularity }) => (
-  <Box direction="col-responsive" justify="center" align="center">
+  <Box direction="row" justify="left" align="center">
     {
         Array(popularity)
           .fill()
