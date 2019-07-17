@@ -4,10 +4,11 @@ import {
 } from 'grommet';
 import { Login, Gamepad } from 'grommet-icons';
 import Popularity from '../components/Popularity';
+import Genre from '../components/Genre';
 
 const game = {
   id: '1',
-  title: 'Darts',
+  title: 'Darts Pro',
   genre: 'Sports',
   desc: 'Darts Pro is a HTML5 Skill Game.\
   Test your aim with this professional version of the Darts Game.\
@@ -17,7 +18,7 @@ const game = {
   Challenge the CPU\
   Challenge a Friend from the same device\
   The game is usable both in Portrait and Landscape Mode, try it now!!',
-  imageUri: 'https://via.placeholder.com/300x200/000000/FFFFFF/?text=gameDetail',
+  imageUri: 'https://via.placeholder.com/300x200.png/000000/FFFFFF/?text=Game+Detail',
   thumbUri: '/games/darts/thumb.jpg',
   gameUri: '/games/darts/index.html',
   popularity: 5,
@@ -32,6 +33,7 @@ const GameDetail = ({ match }) => (
       <Image src={game.imageUri} />
     </Box>
     <Popularity popularity={game.popularity} />
+    <Genre genre={game.genre} />
     <Paragraph alignSelf="center">
       {game.desc}
     </Paragraph>
@@ -45,7 +47,7 @@ const GameDetail = ({ match }) => (
       />
       <Button
         icon={<Gamepad />}
-        label="Single Game"
+        label="Play Solo"
         onClick={() => {}}
         margin="small"
       />

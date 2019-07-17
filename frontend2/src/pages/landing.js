@@ -4,12 +4,10 @@ import GameList from '../components/GameList';
 import SwipeBanner from '../components/SwipeBanner';
 
 const Landing = props => (
-  <Box flex pad="medium" overflow="auto">
-    <Box flex={false}>
-      <SwipeBanner />
-      <Box pad={{ top: 'medium' }} gap="small">
-        <GameList />
-      </Box>
+  <Box flex overflow="auto">
+    <SwipeBanner />
+    <Box pad={{ top: 'medium' }} gap="small">
+      <GameList />
     </Box>
   </Box>
 );

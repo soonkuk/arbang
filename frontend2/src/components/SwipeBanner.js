@@ -3,7 +3,7 @@ import { Attraction, Car, TreeOption } from 'grommet-icons';
 import { Box, Carousel, Image } from 'grommet';
 
 const SwipeBanner = () => (
-  <Box align="center" border>
+  <Box align="center">
     <Carousel play="3000" fill>
       <Box pad="xlarge" background="accent-1">
         <Attraction size="xlarge" />
