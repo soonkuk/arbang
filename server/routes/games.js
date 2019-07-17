@@ -21,7 +21,7 @@ var GameSchema = new Schema({
 );
 */
 // Get all games
-router.get('/games', function(req, res, next) {
+router.get('/', function(req, res, next) {
   Game.find()
     .then(function(data) {
       res.json(data);
@@ -29,7 +29,7 @@ router.get('/games', function(req, res, next) {
 });
 
 // Get single game
-router.get('/games/:id', function(req, res, next) {
+router.get('/:id', function(req, res, next) {
   var _id = req.params.id;
   Game.findById(_id, function(err, data) {
     if (err) {
@@ -41,7 +41,7 @@ router.get('/games/:id', function(req, res, next) {
 });
 
 // Add new game
-router.post('/games', function(req, res, next) {
+router.post('/', function(req, res, next) {
   req.accepts('application/json');
   var game = {
     title: req.body.title,
@@ -60,7 +60,7 @@ router.post('/games', function(req, res, next) {
 });
 
 // Delete game
-router.delete('/games/:id', function(req, res, next) {
+router.delete('/:id', function(req, res, next) {
   var _id = req.params.id;
   Game.findByIdAndRemove(_id, function(err, data) {
     if (err) {
@@ -72,7 +72,7 @@ router.delete('/games/:id', function(req, res, next) {
 });
 
 // Update game
-router.put('/games/:id', function(req, res, next) {
+router.put('/:id', function(req, res, next) {
   req.accepts('application/json');
   var _id = req.params.id;
   Game.findById(_id, function(err, data) {

@@ -16,7 +16,7 @@ var UserSchema = new Schema({
 });
 */
 // Get all users
-router.get('/users', function(req, res, next) {
+router.get('/', function(req, res, next) {
   User.find()
     .then(function(data) {
       res.json(data);
