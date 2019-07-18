@@ -1,10 +1,10 @@
 import React from 'react';
 import { Attraction, Car, TreeOption } from 'grommet-icons';
-import { Box, Carousel, Image } from 'grommet';
+import { Box, Carousel } from 'grommet';
 
 const SwipeBanner = () => (
   <Box align="center">
-    <Carousel play="3000" fill>
+    <Carousel fill play={3000}>
       <Box pad="xlarge" background="accent-1">
         <Attraction size="xlarge" />
       </Box>

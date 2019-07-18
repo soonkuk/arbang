@@ -1,5 +1,7 @@
 import React from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import {
+  BrowserRouter, Route, Switch, withRouter,
+} from 'react-router-dom';
 import { Grommet, Box } from 'grommet';
 import { grommet as grommetTheme } from 'grommet/themes';
 import Header from './components/Header';
