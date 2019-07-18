@@ -5,7 +5,6 @@ import {
   Text,
 } from 'grommet';
 
-/* eslint-disable */
 class AccountLogInSignUp extends Component {
   render() {
     return (

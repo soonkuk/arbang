@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-  Box, Heading, Button, Text,
+  Box, Button, Text,
 } from 'grommet';
 
 class AccountSignUp extends Component {

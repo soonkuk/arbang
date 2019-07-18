@@ -1,28 +1,42 @@
 import React, { Component } from 'react';
 import {
-  Box, Heading, TextInput, Button,
+  Box, Heading, Button,
 } from 'grommet';
+import { BosTextInput } from './Components';
+import axios from 'axios';
 
-class SimpleTextInput extends Component {
-  state = {
-    name: '',
-  }
-
-  ref = React.createRef();
-
-  onChange = event => this.setState({ value: event.target.value });
-
-  render() {
-    const { value } = this.state;
-    return (
-      <Box width="small">
-        <TextInput ref={this.ref} value={value} onChange={this.onChange} />
-      </Box>
-    );
-  }
-}
-
+/* eslint-disable */
 class AccountLogin extends Component {
+
+  state = {
+    ID: '',
+    Password: '',
+  }
+
+  handleID = (e) => {
+    this.setState({
+      ID: e.target.value
+    })
+    console.log(this.state.ID);
+  }
+
+  handlePassword = (e) => {
+    this.setState({
+      Password: e.target.value
+    })
+    console.log(this.state.Password);
+  }
+
+  logIn = () => {
+    axios.post('http://127.0.0.1:3000/api/signin', {uid:this.state.ID, password:this.state.Password})
+    .then(function (response) {
+      console.log(response);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  }
+
   render() {
     return (
       <Box flex>
@@ -44,24 +58,26 @@ class AccountLogin extends Component {
             gap="small"
             overflow="auto"
           >
+            <form className="form-login">
             <Heading level={3} margin="none">
               <strong>Log in</strong>
             </Heading>
-            <Box pad={{ top: 'medium' }} gap="small">
-              <div>
-                ID :
-                {' '}
-                <SimpleTextInput />
-              </div>
-              <div>
-                PASSWORD :
-                {' '}
-                <SimpleTextInput id="Password" />
-              </div>
-              <div align="center">
-                <Button label="Login" primary onClick={() => {}} />
-              </div>
-            </Box>
+              <Box pad={{ top: 'medium' }} gap="small">
+                <div>
+                  ID :
+                  {' '}
+                  <BosTextInput id="Id" text={this.state.ID} action={this.handleID.bind(this)}/>
+                </div>
+                <div>
+                  PASSWORD :
+                  {' '}
+                  <BosTextInput id="Password" text={this.state.Password} action={this.handlePassword.bind(this)}/>
+                </div>
+                <div align="center">
+                  <Button label="Login" primary onClick={this.logIn} />
+                </div>
+              </Box>
+            </form>
           </Box>
         </Box>
       </Box>
