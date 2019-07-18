@@ -8,33 +8,16 @@ import { Login, Gamepad } from 'grommet-icons';
 import RouteGotoComponentBase from '../components/RouteGotoComponentBase';
 import Popularity from '../components/Popularity';
 import Genre from '../components/Genre';
+import DummyGameData from './DummyGameData';
 
-const game = {
-  id: '1',
-  title: 'Darts Pro',
-  genre: 'Sports',
-  desc: 'Darts Pro is a HTML5 Skill Game.\
-  Test your aim with this professional version of the Darts Game.\
-  The game follows the official rules of the Darts Regulation Authority.\
-  Three Games Mode:\
-  Play Solo\
-  Challenge the CPU\
-  Challenge a Friend from the same device\
-  The game is usable both in Portrait and Landscape Mode, try it now!!',
-  imageUri: 'https://via.placeholder.com/300x200.png/000000/FFFFFF/?text=Game+Detail',
-  thumbUri: '/games/darts/thumb.jpg',
-  gameUri: '/games/darts/index.html',
-  popularity: 5,
-};
 class GameDetail extends RouteGotoComponentBase {
   static propTypes = {
-    location: PropTypes.object.isRequired,
-    history: PropTypes.object.isRequired,
     match: PropTypes.object.isRequired,
   };
 
   render() {
-    const { location, history, match } = this.props;
+    const { match } = this.props;
+    const game = DummyGameData[match.params.gameId];
     return (
       <Box fill alignSelf="center">
         <Heading alignSelf="center">
@@ -63,12 +46,6 @@ class GameDetail extends RouteGotoComponentBase {
             margin="small"
           />
         </Box>
-        {/* <Text>
-          { match.params }
-        </Text>
-        <Text>
-          { location }
-        </Text> */}
         <Text>
           { match.params.gameId }
         </Text>

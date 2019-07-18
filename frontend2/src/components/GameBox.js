@@ -9,6 +9,7 @@ import RouteGotoComponentBase from './RouteGotoComponentBase';
 
 class GameBox extends RouteGotoComponentBase {
   render() {
+    const game = this.props.item;
     return (
       <Box
         width="small"
@@ -19,10 +20,10 @@ class GameBox extends RouteGotoComponentBase {
         background={{ color: 'light-2', opacity: 'strong' }}
         margin="small"
       >
-        <Image src={this.props.item.thumbUri} alignSelf="stretch" margin="small" />
-        <Anchor size="small" align="center" onClick={() => this.goto(`/game/${this.props.item._id}`)}>{this.props.item.title}</Anchor>
-        <Genre genre={this.props.item.genre} />
-        <Popularity popularity={this.props.item.popularity} />
+        <Image src={game.thumbUri} alignSelf="stretch" margin="small" />
+        <Anchor size="small" align="center" onClick={() => this.goto(`/game/${game._id}`)}>{game.title}</Anchor>
+        <Genre genre={game.genre} />
+        <Popularity popularity={game.popularity} />
       </Box>
     );
   }

@@ -22,7 +22,7 @@ const App = () => (
           <Route exact path="/login" component={AccountMain} />
           <Route exact path="/ranking" component={RankingMain} />
           <Route exact path="/bos-in" component={BosInOutMain} />
-          <Route path="/game" component={GameDetail} />
+          {/* <Route path="/game" component={GameDetail} /> */}
           <Route path="/game/:gameId" component={GameDetail} />
           <Route component={NotFound} />
         </Switch>
