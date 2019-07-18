@@ -9,7 +9,7 @@ var winston = require('winston');
 var logger = require('morgan');
 var users = require('./routes/users');
 var games = require('./routes/games');
-var signIn = require('./routes/signin');
+var logIn = require('./routes/logIn');
 
 var mongoose = require('mongoose');
 
@@ -24,8 +24,7 @@ app.use(cors());
 
 app.use('/api', games);
 app.use('/api', users);
-app.use('/api', signIn);
-
+app.use('/api', logIn);
 
 app.listen(3000, function() {
   winston.log('info', `Server is listening on port ${PORT}`);

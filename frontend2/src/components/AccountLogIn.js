@@ -4,8 +4,8 @@ import {
 } from 'grommet';
 import { BosTextInput } from './Components';
 import axios from 'axios';
+import PropTypes from 'prop-types';
 
-/* eslint-disable */
 class AccountLogin extends Component {
 
   state = {
@@ -28,9 +28,14 @@ class AccountLogin extends Component {
   }
 
   logIn = () => {
-    axios.post('http://127.0.0.1:3000/api/signin', {uid:this.state.ID, password:this.state.Password})
+    const { action } = this.props;
+    axios.post('http://127.0.0.1:3000/api/login', {uid:this.state.ID, password:this.state.Password})
     .then(function (response) {
-      console.log(response);
+      console.log(response.data);
+      if (response.data.auth === true) {
+        console.log(response.data);
+        action(response.data);
+      }
     })
     .catch(function (error) {
       console.log(error);
@@ -84,5 +89,9 @@ class AccountLogin extends Component {
     );
   }
 }
+
+AccountLogin.propTypes = {
+  action: PropTypes.func.isRequired
+};
 
 export default AccountLogin;

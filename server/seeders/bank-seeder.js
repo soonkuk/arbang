@@ -1,10 +1,10 @@
 var mongoose = require('mongoose');
-var User = require('../models/User.model');
+var Bank = require('../models/Bank.model');
 
 require('dotenv').config()
 mongoose.connect(process.env.MONGO_CONNECTION_STR);
 
-User.collection.drop();
+Bank.collection.drop();
 
 /*
 user[0] 
@@ -18,42 +18,42 @@ user[2]
     Public Address: GB3YFG6SJVKWFM5TIZJJOMHJEDFM5GILSGLYV4LX43LXKWOAKQNCBKV3
 */
 
-var users = [
-  new User({
+var Banks = [
+  new Bank({
     uid: 'dr.frank@gmaile.com',
-    password: 'dr.frank',
+    balance: 1000,
     bos_account: 'GBODIJAAI66DDKXLHGP6Z6ZC3M7K6LUIP6NK2CA34WOYYUHVSGS7E5AU'
   }),
-  new User({
+  new Bank({
     uid: 'zombie@gmaile.com',
-    password: 'zombie',
+    balance: 1000,
     bos_account: 'GB3CVLBKTBVDCZBKJ37LNFRUS726KN7U2QOOIYVVYGZG5XVES6VV4XVY'
    }),
-  new User({
+  new Bank({
     uid: 'hello@gmaile.com',
-    password: 'hello',
+    balance: 1000,
     bos_account: 'GB3YFG6SJVKWFM5TIZJJOMHJEDFM5GILSGLYV4LX43LXKWOAKQNCBKV3'
   }),
-  new User({
+  new Bank({
     uid: 'bos',
-    password: 'bos',
+    balance: 1000,
     bos_account: 'GB3YFG6SJVKWFM5TIZJJOMHJEDFM5GILSGLYV4LX43LXKWOAKQNCBKV3'
   })
 ];
 
 var count = 0;
-users.forEach((elem) => {
+Banks.forEach((elem) => {
   elem.save(function(err) {
     if (err) {
       console.log(err);
     } else {
       count++;
-      if (count == users.length) quit();
+      if (count == Banks.length) quit();
     }
   });
 });
 
 function quit() {
-  console.log('Added ',users.length,' user seeds');
+  console.log('Added ',Banks.length,' banks seeds');
   mongoose.disconnect();
 }

@@ -4,6 +4,7 @@ var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
 var UserModel = require('../models/User.model');
+var BankModel = require('../models/Bank.model');
 
 require('dotenv').config();
 mongoose.connect(process.env.MONGO_CONNECTION_STR);
@@ -21,12 +22,10 @@ var GameSchema = new Schema({
 );
 */
 // Get all games
-router.post('/signin', function(req, res, next) {
+router.post('/login', function(req, res, next) {
   req.accepts('application/json');
   const _uid = req.body.uid;
   const password = req.body.password;
-  console.log('@@@@@@@@@@@@@@@@@@@@@@@@@');
-  console.log(_uid);
   UserModel.findOne({uid: _uid}, function(err, results) {
     if (err) {
       res.status(404).send(err);
@@ -37,10 +36,28 @@ router.post('/signin', function(req, res, next) {
         var authnticated = user.authenticate(password, results._doc.salt, results._doc.hashed_password);
         if (authnticated) {
           console.log('password correct!');
-          res.send(results);
+          BankModel.findOne({uid: _uid}, function(err, results) {
+            console.log('find bank data');
+            if (err) {
+              console.log('User bank record is incorrect');
+              res.status(404).send(err);
+            } else {
+              const json = {
+                name: results._doc.uid,
+                balance: results._doc.balance,
+                auth: true
+              };
+              res.send(json);
+            }
+          });
         } else {
           console.log('password not correct!');
-          res.send('false');
+          const json = { 
+            name: results._doc._uid,
+            balance: 0,
+            auth: false
+          };
+          res.send(json);
         }
       }
     }
