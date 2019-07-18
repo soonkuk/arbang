@@ -6,7 +6,7 @@ var mongoose = require('mongoose');
 var User = require('../models/User.model');
 
 require('dotenv').config();
-mongoose.connect(process.env.MONGO_CONNECTION_STR)
+mongoose.connect(process.env.MONGO_CONNECTION_STR);
 /*
 var UserSchema = new Schema({
     uid: {type: String, required: true, unique: true},

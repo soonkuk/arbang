@@ -2,7 +2,6 @@
   "name": "warehouse_app",
   "version": "1.0.0",
   "description": "\"# warehouse_app\"",
-  "main": "index.js",
   "scripts": {
     "backend": "nodemon server.js"
   },
@@ -18,6 +17,7 @@
   "homepage": "https://github.com/deniso95/warehouse_app#readme",
   "dependencies": {
     "body-parser": "^1.15.2",
+    "cors": "^2.8.5",
     "crypto": "^1.0.1",
     "dotenv": "^8.0.0",
     "ejs": "^2.5.2",

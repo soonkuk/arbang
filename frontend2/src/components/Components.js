@@ -10,23 +10,23 @@ import PropTypes from 'prop-types';
 import { deepMerge } from 'grommet/utils';
 
 class BosTextInput extends Component {
-  state = {
-    value: '',
-  }
 
   ref = React.createRef();
 
-  onChange = event => this.setState({ value: event.target.value });
-
   render() {
-    const { value } = this.state;
+    const { action, text } = this.props;
     return (
       <Box width="small">
-        <TextInput ref={this.ref} value={value} onChange={this.onChange} />
+        <TextInput ref={this.ref} value={text} onChange={action} />
       </Box>
     );
   }
 }
+
+BosTextInput.propTypes = {
+  action: PropTypes.func.isRequired,
+  text: PropTypes.string.isRequired,
+};
 
 const BosTheme = deepMerge(grommet, {
   global: {
