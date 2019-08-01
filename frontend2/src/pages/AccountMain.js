@@ -1,41 +1,41 @@
 import React, { Component } from 'react';
 import { Box } from 'grommet';
-import AccountLogIn from '../components/AccountLogIn';
-import AccountSignUp from '../components/AccountSignUp';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import {
+  BrowserRouter, Route, withRouter,
+} from 'react-router-dom';
 import AccountLogInSignUp from '../components/AccountLogInSignUp';
 import AccountLogInSuccess from '../components/AccountLogInSuccess';
+import AccountLogIn from '../components/AccountLogIn';
+import AccountSignUp from '../components/AccountSignUp2';
 
 /* eslint-disable */
 class AccountMain extends Component {
-  state = {
-    logInSuccess: false,
-    accountName: '',
-    accountBalance: 0
-  }
-
-  changeLogInStatus = (data) => {
-    this.setState({
-      logInSuccess: data.auth,
-      accountName: data.name,
-      accountBalance: data.balance
-    })
-  } 
 
   render() {
-    if (this.state.logInSuccess == true) {
-      return (
+    return (
+      <BrowserRouter>
         <Box flex={true}>
-          <AccountLogInSuccess name={this.state.accountName} balance={this.state.accountBalance}/>
+          <AccountLogInSignUp />
+          <Route exact path="/signUp" component={AccountSignUp} />
+          <Route exact path="/logIn" component={AccountLogIn} />
         </Box>
-      )
-    } else {
-      return (
-        <Box flex={true}>
-          <AccountLogIn action={this.changeLogInStatus.bind(this)}/>
-        </Box>
-      )      
-    }
+      </BrowserRouter>
+    )
   }
 }
 
-export default AccountMain;
+const { bool, number } = PropTypes;
+
+AccountMain.propTypes = {
+  authenticated: bool.isRequired,
+  balance: number.isRequired
+};
+
+const mapStateToProps = state => ({
+  authenticated: state.session.authenticated,
+  balance: state.account.balance,
+});
+
+export default connect(mapStateToProps)(AccountMain);

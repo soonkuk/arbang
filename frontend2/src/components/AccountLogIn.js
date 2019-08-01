@@ -2,39 +2,54 @@ import React, { Component } from 'react';
 import {
   Box, Heading, Button,
 } from 'grommet';
-import { BosTextInput } from './Components';
 import axios from 'axios';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { BosTextInput } from './Components';
 
+/* eslint-disable */
 class AccountLogin extends Component {
-
-  state = {
-    ID: '',
-    Password: '',
+  constructor( props ){
+    super( props );
+    this.state = {
+      user: {
+        id: '',
+        password: '',
+      },
+    }
+    this.handleId = this.handleId.bind(this);
+    this.handlePassword = this.handlePassword.bind(this);
+    this.logIn = this.logIn.bind(this);
   }
 
-  handleID = (e) => {
+  handleId = (e) => {
+    const { user } = this.state;
     this.setState({
-      ID: e.target.value
-    })
-    console.log(this.state.ID);
+      user: {
+        ...user,
+        id: e.target.value,
+      }
+    });
   }
 
   handlePassword = (e) => {
+    const { user } = this.state;
     this.setState({
-      Password: e.target.value
-    })
-    console.log(this.state.Password);
+      user: {
+        ...user,
+        password: e.target.value,
+      }
+    });
   }
 
   logIn = () => {
-    const { action } = this.props;
-    axios.post('http://127.0.0.1:3000/api/login', {uid:this.state.ID, password:this.state.Password})
+    const { user } = this.state;
+    axios.post('http://127.0.0.1:3000/api/logIn', { uid: user.id, password: user.password })
     .then(function (response) {
-      console.log(response.data);
-      if (response.data.auth === true) {
+      const { token } = response;
+      console.log('Response status : ', response.status, ' Response token : ', token);
+      if (response.status == 200) {
         console.log(response.data);
-        action(response.data);
       }
     })
     .catch(function (error) {
@@ -43,11 +58,13 @@ class AccountLogin extends Component {
   }
 
   render() {
+    const { user } = this.state;
+    const { handleId, handlePassword, logIn } = this;
+
     return (
       <Box flex>
         <Box
           align="center"
-          background="dark-2"
           direction="row-responsive"
           justify="center"
           gap="medium"
@@ -57,29 +74,28 @@ class AccountLogin extends Component {
             flex={false}
             align="center"
             pad="medium"
-            align="center"
             background={{ color: '#FFFFFF', opacity: 'strong' }}
             round="xsmall"
             gap="small"
             overflow="auto"
           >
             <form className="form-login">
-            <Heading level={3} margin="none">
-              <strong>Log in</strong>
-            </Heading>
+              <Heading level={3} margin="none">
+                <strong>Log in</strong>
+              </Heading>
               <Box pad={{ top: 'medium' }} gap="small">
                 <div>
                   ID :
-                  {' '}
-                  <BosTextInput id="Id" text={this.state.ID} action={this.handleID.bind(this)}/>
+                  {''}
+                  <BosTextInput id="Id" text={user.id} action={ handleId }/>
                 </div>
                 <div>
                   PASSWORD :
-                  {' '}
-                  <BosTextInput id="Password" text={this.state.Password} action={this.handlePassword.bind(this)}/>
+                  {''}
+                  <BosTextInput id="Password" text = { user.password } action = { handlePassword }/>
                 </div>
                 <div align="center">
-                  <Button label="Login" primary onClick={this.logIn} />
+                  <Button label="Login" primary onClick = { logIn } />
                 </div>
               </Box>
             </form>
@@ -90,8 +106,18 @@ class AccountLogin extends Component {
   }
 }
 
+const { object, bool, number } = PropTypes;
+
 AccountLogin.propTypes = {
-  action: PropTypes.func.isRequired
+  user: object.isRequired,
+  authenticated: bool.isRequired,
+  balance: number.isRequired
 };
 
-export default AccountLogin;
+const mapStateToProps = state => ({
+  user: state.session.user,
+  authenticated: state.session.authenticated,
+  balance: state.account.balance,
+});
+
+export default connect(mapStateToProps)(AccountLogin);

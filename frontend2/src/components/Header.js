@@ -17,7 +17,7 @@ const Header = () => (
       dropAlign={{ top: 'top', right: 'right' }}
       items={[
         { label: 'Home', href: '/' },
-        { label: 'Log In', href: '/login' },
+        { label: 'Account', href: '/account' },
         { label: 'Ranking', href: '/ranking' },
         { label: 'BOS In/Out', href: '/bos-in' },
       ]}

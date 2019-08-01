@@ -7,7 +7,7 @@ class AccountLogInSuccess extends Component {
     const { name, balance } = this.props;
     return (
       <Box align="center">
-        <Heading>Log In Success!</Heading>
+        <Heading>Log In!</Heading>
         <Heading> Account : {name} / Balance : {balance} </Heading>
       </Box>
     )
