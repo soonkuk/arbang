@@ -4,6 +4,7 @@ var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
 var User = require('../models/User.model');
+var logger = require('../src/lib/logger');
 
 require('dotenv').config();
 mongoose.connect(process.env.MONGO_CONNECTION_STR);
@@ -22,16 +23,35 @@ router.get('/users', function(req, res, next) {
     });
 });
 
-// Get single user 
+// Get single user
 router.get('/users/:id', function(req, res, next) {
-  var _id = req.params.id;
-  User.findById(_id, function(err, data) {
-    if (err) {
-      res.status(404).send();
+  logger.info('req.param.id : ', req.params.id);
+  req.accepts('application/json');
+  if (req.session.user) {
+    var _uid = req.params.id;
+    if (req.session.user.email == _uid) {
+      logger.info(req.session.user);
+      logger.info('get user info');
+      User.findOne({uid: _uid}, function(err, results) {
+        if (err) {
+          res.status(302).send();
+        } else {
+          logger.info(results._doc);
+          const json = {
+            email: results._doc.uid,
+            bos_account: results._doc.bos_account,
+            authenticated: true,
+            emailChecked: true
+          };
+          res.send(json);
+        }
+      });
     } else {
-      res.json(data);
+      res.status(302).send();
     }
-  });
+  } else {
+    res.status(302).send();
+  }
 });
 
 // Add new user

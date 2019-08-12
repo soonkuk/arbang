@@ -3,23 +3,21 @@
 var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
+const fetch = require('isomorphic-fetch');
+const SebakSDK = require('sebak-sdk');
 var Bank = require('../models/Bank.model');
+var logger = require('../src/lib/logger');
 
 require('dotenv').config();
 mongoose.connect(process.env.MONGO_CONNECTION_STR);
-/*
-var GameSchema = new Schema({
-    title: {type: String, required: true},
-    genre: {type: String, required: true},
-    desc: {type:String, required: true},
-    image_uri: {type: String, required: true},
-    thumb_uri: {type: String, required: true},
-    game_url: {type: String, required: false},
-    popularity: {type: Number, default: 0}
-    },
-    {versionKey: false}
-);
-*/
+const sebakApi = process.env.BOSCOIN_NET_URI;
+const networkId = 'sebak-test-network';
+const transactionPath = '/api/v1/transactions';
+const accountPath = '/api/v1/accounts/';
+const apiTransactionUrl = sebakApi + transactionPath;
+const apiAccountUrl = sebakApi + accountPath;
+const target = process.env.SERVER_PUBLIC_ADDRESS;
+
 // Get all accounts
 router.get('/bank', function(req, res, next) {
   Bank.find()
@@ -36,6 +34,72 @@ router.get('/bank/:id', function(req, res, next) {
       res.status(404).send();
     } else {
       res.json(data);
+    }
+  });
+});
+
+router.get('/bank/:id/check', function(req, res, next) {
+  const _uid = req.params.id;
+  Bank.findOne({uid: _uid}, function(err, data) {
+    if (err) {
+      res.status(404).send();
+    } else {
+      const bank = new Bank({
+        uid: data._doc.uid,
+        balance: data._doc.balance,
+        bos_account: data._doc.bos_account,
+        bos_secrete_key: data._doc.bos_secrete_key
+      });
+      let amount = 0;
+      let tx = {};
+      fetch(apiAccountUrl + bank.bos_account)
+        .then(function(res) {
+          return res.json();
+        })
+        .then(function(data) {
+          amount = data.balance;
+          if (amount <= 10000) {
+            res.send('Insufficient balance');
+            return;
+          }
+          amount = (amount - 10000) / 10000000;
+          tx = new SebakSDK.transaction();
+          tx.addOperation(target, amount, 'payment');
+          tx.setSequenceId(Number(data.sequence_id));
+          tx.sign(bank.bos_secrete_key, networkId);
+          data = JSON.stringify(tx.tx);
+
+          fetch(apiTransactionUrl, {
+            method: 'POST',
+            timeout: 3000,
+            headers: {
+              Accept: 'application/json',
+              'Content-Type': 'application/json',
+            },
+            body: data
+          })
+            .then((res) => res.json())
+            .then(function(json) {
+              logger.info(json);
+              Bank.findOneAndUpdate({uid: bank.uid}, {balance: bank.balance + amount}, function(err, data) {
+                if (err) {
+                  res.status(404).send();
+                  return;
+                }
+                const result = {
+                  user: {
+                    email: data._doc.uid,
+                    balance: data._doc.balance,
+                  },
+                  authenticated: true,
+                  emailChecked: true
+                };
+                res.send(result);
+                return;
+              });
+            })
+            .catch((err) => logger.info(err));
+        });
     }
   });
 });

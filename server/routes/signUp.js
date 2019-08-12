@@ -19,7 +19,8 @@ router.post('/signUp', function(req, res, next) {
   const user = new User({
     uid: req.body.uid,
     password: req.body.password,
-    bos_account: keyPair['address']
+    bos_account: keyPair['address'],
+    bos_secrete_key: keyPair['seed'],
   });
 
   user.save()
@@ -34,7 +35,8 @@ router.post('/signUp', function(req, res, next) {
   const bank = new Bank({
     uid: req.body.uid,
     balance: 0,
-    bos_account: keyPair['address']
+    bos_account: keyPair['address'],
+    bos_secrete_key: keyPair['seed'],
   });
 
   bank.save()

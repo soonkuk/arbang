@@ -23,11 +23,6 @@ class BosTextInput extends Component {
   }
 }
 
-BosTextInput.propTypes = {
-  action: PropTypes.func.isRequired,
-  text: PropTypes.string.isRequired,
-};
-
 const BosTheme = deepMerge(grommet, {
   global: {
     control: {

@@ -4,7 +4,6 @@ var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
 var logger = require('../src/lib/logger');
-
 var User = require('../models/User.model');
 var Bank = require('../models/Bank.model');
 
@@ -13,57 +12,74 @@ mongoose.connect(process.env.MONGO_CONNECTION_STR);
 
 // log in process
 router.post('/logIn', function(req, res, next) {
-  logger.info('## log in process');
-
   req.accepts('application/json');
-  const _uid = req.body.uid;
+  const _uid = req.body.email;
   const _password = req.body.password;
-
   if (req.session.user) {
     // already log in state
-    logger.info('already log in state');
+    if (req.session.user.email == _uid) {
+      logger.info(req.session.user);
+      logger.info('already log in state');
+      const json = {
+        user: {
+          email: req.session.user.email,
+          balance: req.session.user.balance,
+        },
+        authenticated: true,
+        emailChecked: true
+      };
+      res.send(json);
+      res.send();
+    } else {
+      const json = {
+        user: {
+          email: req.session.user.email,
+          balance: req.session.user.balance,
+        },
+        authenticated: true,
+        emailChecked: false
+      };
+      res.send(json);
+    }
   } else {
     User.findOne({uid: _uid}, function(err, results) {
       if (err) {
-        res.status(404).send(err);
+        res.status(302).send();
       } else {
         if (results != null) {
+          logger.info('user record found');
           var user = new User({uid: _uid});
-          logger.info(results._doc);
           var authnticated = user.authenticate(_password, results._doc.salt, results._doc.hashed_password);
           if (authnticated) {
-            logger.info('password correct!');
-
             Bank.findOne({uid: _uid}, function(err, results) {
-              logger.info('find bank data');
               if (err) {
-                logger.info('User bank record is incorrect');
-                res.status(404).send(err);
+                logger.info('user bank record incorrect');
+                res.status(500).send();
               } else {
+                logger.info('log in success!');
                 const json = {
-                  name: results._doc.uid,
-                  balance: results._doc.balance,
-                  state: 'logIn'
+                  user: {
+                    email: results._doc.uid,
+                    balance: results._doc.balance,
+                  },
+                  authenticated: true,
+                  emailChecked: true,
                 };
                 req.session.user = {
-                  id: _uid,
-                  authorized: true
+                  email: _uid,
+                  password: _password,
+                  balance: results._doc.balance
                 };
                 res.send(json);
               }
             });
           } else {
-            logger.info('password not correct!');
-            const json = {
-              name: results._doc._uid,
-              balance: 0,
-              auth: 'logOut'
-            };
-            res.send(json);
+            logger.info('password incorrect!');
+            res.status(302).send();
           }
         } else {
-          logger.info('debugging');
-          logger.info(results);
+          logger.info('user email incorrect!');
+          res.status(302).send();
         }
       }
     });

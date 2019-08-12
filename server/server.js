@@ -11,10 +11,12 @@ var bodyParser = require('body-parser');
 var session = require('express-session');
 
 var users = require('./routes/users');
+var banks = require('./routes/bank');
 var games = require('./routes/games');
 var logIn = require('./routes/logIn');
 var logOut = require('./routes/logOut');
 var signUp = require('./routes/signUp');
+var test = require('./routes/test');
 
 var logger = require('./src/lib/logger');
 
@@ -25,29 +27,49 @@ var app = express();
 const PORT = process.env.PORT || 3000;
 
 // Body Parser
-app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
-app.use(cors());
+app.use(bodyParser.json());
+app.use(cors({credentials: true, origin: 'http://localhost'}));
+
+// TODO: Once in production, don't forget to modify req.headers.origin to the exact website you wish to allow to connect.
+/* app.use((req, res, next) => {
+  logger.info(req.headers.origin);
+  var allowedOrigins = ['http://127.0.0.1:80', 'http://localhost:80', 'http://127.0.0.1', 'http://localhost'];
+  var origin = req.headers.origin;
+  if (allowedOrigins.indexOf(origin) > -1) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+  }
+  res.header('Access-Control-Allow-Credentials', true);
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,UPDATE,OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept');
+  return next();
+});
+*/
+app.use((req, res, next) => {
+  next();
+});
 
 app.use(session({
   genid: (req) => {
     return uuid(); // use UUIDs for session IDs
   },
   secret: 'bos',
-  resave: true,
-  saveUninitialized: true
+  resave: false,
+  saveUninitialized: true,
+  cookie: {httpOnly: false}
 }));
 
 app.use((req, res, next) => {
-  logger.info('');
   next();
 });
 
 app.use('/api', games);
 app.use('/api', users);
+app.use('/api', banks);
 app.use('/api', logIn);
 app.use('/api', logOut);
 app.use('/api', signUp);
+app.use('/api', test);
 
 app.listen(3000, function() {
   logger.info(`Server is listening on port ${PORT}`);

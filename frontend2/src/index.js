@@ -1,19 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createStore } from 'redux';
 import { Provider } from 'react-redux';
-import { sessionService } from 'redux-react-session';
 import * as serviceWorker from './serviceWorker';
 import App from './App';
-import rootReducer from './store';
-
-// apply chrome develoer tool
-const devTools =
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__();
-const store = createStore(rootReducer, devTools);
+import store from './store';
 
 // Init the session service
-sessionService.initSessionService(store);
+// sessionService.initSessionService(store);
 
 ReactDOM.render(
   <Provider store={store}>

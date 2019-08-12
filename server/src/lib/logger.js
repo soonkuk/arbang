@@ -4,7 +4,7 @@ var winston = require('winston');
 var moment = require('moment');
 
 function timeStampFormat() {
-  return moment().format('YYYY-MM-DD HH:mm:ss.SSS ZZ');
+  return moment().format('YYYY-MM-DD HH:mm:ssss Z');
 }
 
 //logger 설정
@@ -16,6 +16,7 @@ var logger = new (winston.Logger)({
       level: 'info',
       showLevel: true,
       json: true,
+      timestamp: timeStampFormat
     })
   ],
   exceptionHandlers: [

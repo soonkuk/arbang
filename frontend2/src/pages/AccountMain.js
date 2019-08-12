@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
 import { Box } from 'grommet';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import {
-  BrowserRouter, Route, withRouter,
+  BrowserRouter, Route,
 } from 'react-router-dom';
-import AccountLogInSignUp from '../components/AccountLogInSignUp';
-import AccountLogInSuccess from '../components/AccountLogInSuccess';
-import AccountLogIn from '../components/AccountLogIn';
-import AccountSignUp from '../components/AccountSignUp2';
+import AccountLogIndex from '../components/AccountIndex';
+import AccountLogInOut from '../components/AccountLogInOut';
+import AccountSignUp from '../components/AccountSignUp';
 
 /* eslint-disable */
 class AccountMain extends Component {
@@ -17,24 +15,17 @@ class AccountMain extends Component {
     return (
       <BrowserRouter>
         <Box flex={true}>
-          <AccountLogInSignUp />
+          <Route exact path="/account" component={AccountLogIndex} />
           <Route exact path="/signUp" component={AccountSignUp} />
-          <Route exact path="/logIn" component={AccountLogIn} />
+          <Route exact path="/logIn" component={AccountLogInOut} />
         </Box>
       </BrowserRouter>
     )
   }
 }
 
-const { bool, number } = PropTypes;
-
-AccountMain.propTypes = {
-  authenticated: bool.isRequired,
-  balance: number.isRequired
-};
-
 const mapStateToProps = state => ({
-  authenticated: state.session.authenticated,
+  authenticated: state.account.authenticate,
   balance: state.account.balance,
 });
 

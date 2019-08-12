@@ -1,15 +1,36 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Box } from 'grommet';
-import BosInOutSection from '../components/BosInOutSection';
+import { connect } from 'react-redux';
+import {
+  BrowserRouter, Route,
+} from 'react-router-dom';
+import BosInOutIndex from '../components/BosInOutIndex';
 import BosIn from '../components/BosIn';
 import BosOut from '../components/BosOut';
 
-const BosInOutMain = () => (
-  <Box flex="true">
-    <BosInOutSection />
-    <BosIn />
-    <BosOut />
-  </Box>
-);
+/* eslint-disable */
+class BosInOutMain extends Component {
+  constructor(props, context) {
+    super(props, context);
+    this.props.history.push('/boscoin');
+  }
 
-export default BosInOutMain;
+  render() {
+    return (
+      <BrowserRouter>
+        <Box flex={true}>
+          <Route exact path='/boscoin' component={BosInOutIndex} />
+          <Route exact path='/boscoinIn' component={BosIn} />
+          <Route exact path='/boscoinOut' component={BosOut} />
+        </Box>
+      </BrowserRouter>
+    )
+  }
+}
+
+const mapStateToProps = state => ({
+  authenticated: state.account.authenticate,
+  balance: state.account.balance,
+});
+
+export default connect(mapStateToProps)(BosInOutMain);

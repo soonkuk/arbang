@@ -5,13 +5,61 @@ import {
   Heading,
   Button,
 } from 'grommet';
+import axios from 'axios';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import { BosTextInput } from './Components';
 import BosInHistory from './BosInHistory';
 
+axios.defaults.withCredentials = true;
+
 /* eslint-disable */
 class BosIn extends Component {
+  constructor( props ){
+    super( props );
+    this.state = {
+      bos_account: ''
+    }
+    this.getAccount = this.getAccount.bind(this);
+    this.handlePageHistory = this.handlePageHistory.bind(this);
+    this.updateState = this.updateState.bind(this);
+  }
+
+  handlePageHistory = (path) => {
+    console.log("handlePageHistory  ", path);
+    this.props.history.push(path);
+  }
+
+  updateState = (addr) => {
+    this.setState({
+      bos_account: addr
+    })
+  }
+
+  getAccount = () => {
+    console.log(this.props.user);
+    const { handlePageHistory, updateState } = this;
+    console.log('http://127.0.0.1:3000/api/users/'+ this.props.user.email);
+    axios.get('http://127.0.0.1:3000/api/users/'+ this.props.user.email)
+    .then(function(res){
+      if (res.status == 200){
+        if (res.data.authenticated && res.data.emailChecked) {
+          console.log(res);
+          updateState(res.data.bos_account);
+        } else if (res.data.emailChecked != true) {
+          this.handlePageHistory('/boscoin');
+        }
+      }
+    })
+    .catch(function (error) {
+      handlePageHistory('/boscoin');
+      console.log(error);
+    })
+  }
 
   render() {
+    const { getAccount} = this;
+
     return (
       <Box
       flex={false}
@@ -33,9 +81,9 @@ class BosIn extends Component {
             <Button 
               label='입금주소 생성' 
               primary={true} 
-              onClick={() => {}} 
+              onClick={ getAccount } 
             />
-          </div><BosTextInput />
+          </div><BosTextInput text = {this.state.bos_account} />
           </Box>
           <BosInHistory />
         </Box>
@@ -44,4 +92,10 @@ class BosIn extends Component {
   };
 }
 
-export default BosIn;
+const mapStateToProps = state => ({
+  user: state.account.user,
+  authenticated: state.account.authenticate,
+  checked: state.account.checked,
+});
+
+export default connect(mapStateToProps)(withRouter(BosIn));

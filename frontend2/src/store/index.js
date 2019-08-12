@@ -1,8 +1,3 @@
-import { combineReducers } from 'redux';
-import { sessionReducer } from 'redux-react-session';
-import accountReducer from './modules/account';
+import configure from './configure';
 
-export default combineReducers({
-  session: sessionReducer,
-  account: accountReducer,
-});
+export default configure();

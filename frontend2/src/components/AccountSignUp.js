@@ -125,15 +125,9 @@ class AccountSignUp extends Component {
 
 const { object, bool, number } = PropTypes;
 
-AccountSignUp.propTypes = {
-  user: object.isRequired,
-  authenticated: bool.isRequired,
-  balance: number.isRequired
-};
-
 const mapStateToProps = state => ({
-  user: state.session.user,
-  authenticated: state.session.authenticated,
+  user: state.account.user,
+  authenticated: state.account.authenticate,
   balance: state.account.balance,
 });
 

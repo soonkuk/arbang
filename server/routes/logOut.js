@@ -10,27 +10,30 @@ mongoose.connect(process.env.MONGO_CONNECTION_STR);
 
 router.post('/logOut', function(req, res, next) {
   logger.info('## log Out process');
-
+  logger.info(req.session.user)
   req.accepts('application/json');
   if (req.session.user) {
-  // log in state
-    logger.info('log out');
-    const json = {
-      name: req.session.id,
-      state: 'logout'
-    };
-    req.session.destroy(function(err) {
-      if (err) {throw err;}
-      logger.info('session destroyed and log out');
-      res.send(json);
-    });
+  // log out state
+    if (req.session.user.email == req.body.email) {
+      logger.info('log out');
+      const json = {
+        user: {
+          email: req.session.user.email,
+          balance: req.session.user.balance
+        },
+        authenticated: false,
+        emailChecked: true
+      };
+      req.session.destroy(function(err) {
+        if (err) {throw err;}
+        logger.info('session destroyed and log out');
+        res.send(json);
+      });
+    }
   } else {
     // not log in state
     logger.info('not log in state');
-    const json = {
-      state: 'logout'
-    };
-    res.send(json);
+    res.status(401).send();
   }
 });
 

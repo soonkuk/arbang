@@ -6,7 +6,6 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Grommet, Box } from 'grommet';
 import { grommet as grommetTheme } from 'grommet/themes';
-import { sessionService } from 'redux-react-session';
 import Header from './components/Header';
 import Landing from './pages/Landing';
 import GameDetail from './pages/GameDetail';
@@ -22,8 +21,6 @@ class App extends Component {
   }
 
   render() {
-    const { authenticated, checked } = this.props;
-    console.log('Authenticated : ', authenticated, 'Checked : ', checked);
 
     return (
       <BrowserRouter>
@@ -34,10 +31,10 @@ class App extends Component {
               <Route exact path="/" component={Landing} />
               <Route exact path="/account" component={AccountMain} />
               <Route exact path="/ranking" component={RankingMain} />
-              <Route exact path="/bos-in" component={BosInOutMain} />
-              {/* <Route path="/game" component={GameDetail} /> */}
+              <Route exact path="/boscoin" component={BosInOutMain} />
+              <Route path="/game" component={GameDetail} />
               <Route path="/game/:gameId" component={GameDetail} />
-              <Route component={NotFound} />
+              {/* <Route component={NotFound} /> */}
             </Switch>
           </Box>
         </Grommet>
@@ -48,14 +45,9 @@ class App extends Component {
 
 const { bool } = PropTypes;
 
-App.propTypes = {
-  authenticated: bool.isRequired,
-  checked: bool.isRequired,
-};
-
 const mapStateToProps = state => ({
-  checked: state.session.checked,
-  authenticated: state.session.authenticated,
+  checked: state.account.checked,
+  authenticated: state.account.authenticate,
 });
 
 export default connect(mapStateToProps)(App);

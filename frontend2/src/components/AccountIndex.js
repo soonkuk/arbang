@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
 import {
   Box,
   Button,
@@ -10,13 +9,16 @@ import {
 
 
 /* eslint-disable */
-class AccountLogInSignUp extends Component {
+class AccountIndex extends Component {
   constructor(props) {
     super(props);
-    this.handleOnClick = this.handleOnClick.bind(this);
+    this.handlePageHistory = this.handlePageHistory.bind(this);
+    if (this.props.authenticated == true) {
+      this.handlePageHistory('/logIn');
+    }
   }
 
-  handleOnClick = (path) => {
+  handlePageHistory = (path) => {
     console.log("handleOnClick", path);
     this.props.history.push(path);
   }
@@ -28,8 +30,8 @@ class AccountLogInSignUp extends Component {
           <p />
           <Text>Login is required.</Text>
           <Box direction="row" align="center" gap="small" pad="medium">
-            <Button primary label="Log in" onClick = { () => this.handleOnClick('/logIn') } />
-            <Button label="Sign up" onClick = { () => this.handleOnClick('/signUp') } />
+            <Button primary label="Log in" onClick = { () => this.handlePageHistory('/logIn') } />
+            <Button label="Sign up" onClick = { () => this.handlePageHistory('/signUp') } />
           </Box>
         </Box>
       </Box>
@@ -37,16 +39,9 @@ class AccountLogInSignUp extends Component {
   }
 }
 
-const { bool, number } = PropTypes;
-
-AccountLogInSignUp.propTypes = {
-  authenticated: bool.isRequired,
-  balance: number.isRequired
-};
-
 const mapStateToProps = state => ({
-  authenticated: state.session.authenticated,
+  authenticated: state.account.authenticate,
   balance: state.account.balance,
 });
 
-export default connect(mapStateToProps)(withRouter(AccountLogInSignUp));
+export default connect(mapStateToProps)(withRouter(AccountIndex));

@@ -1,11 +1,14 @@
-import React from 'react';
-
-import { 
+/* eslint-disable */
+import {
   Grommet,
   Box,
+  Button,
   DataTable,
   Text,
 } from 'grommet';
+import axios from 'axios';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 const columns = [
   {
@@ -80,15 +83,50 @@ const DATA = [
   },
 ];
 
-const BosInHistory = () => (
-  <Grommet>
-    <Box align="center">
-      <Text>Bos 입금 내역</Text>
-    </Box>
-    <Box align="center" pad="small">
-      <DataTable columns={columns} data={DATA} size="medium" />
-    </Box>
-  </Grommet>
-);
+class BosInHistory extends Component {
+  constructor( props ){
+    super( props );
+    this.checkDeposit = this.checkDeposit.bind(this);
+  }
 
-export default BosInHistory;
+  checkDeposit = () => {
+    axios.get('http://127.0.0.1:3000/api/bank/'+ this.props.user.email+'/check')
+    .then(function(res){
+      if (res.status == 200){
+        console.log(res);
+      }
+    })
+    .catch(function (error) {
+      console.log(error);
+    })
+  }
+
+  render() {
+    const { checkDeposit } = this;
+    return (
+      <Grommet>
+        <Box align="center">
+          <Text>Bos In & Out History</Text>
+        </Box>
+        <Box align="center" pad="small">
+          <DataTable columns={columns} data={DATA} size="medium" />
+        </Box>
+        <div align="center">
+          <Button
+            label='Deposit confirm request'
+            primary={true}
+            onClick={ checkDeposit }
+          />
+        </div>
+      </Grommet>
+    )
+  }
+}
+
+const mapStateToProps = state => ({
+  user: state.account.user,
+  authenticated: state.account.authenticate,
+  checked: state.account.checked,
+});
+
+export default connect(mapStateToProps)(BosInHistory);
